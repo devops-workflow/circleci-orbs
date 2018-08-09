@@ -14,6 +14,7 @@ jobs:
       - image: singapore/lint-condo
       # https://hub.docker.com/r/singapore/lint-condo/
       # https://github.com/singapore/lint-condo
+      # TODO: disable line length
     steps:
       - checkout
       - run:
@@ -26,6 +27,7 @@ jobs:
       - checkout
       - run:
           command: |
+              mkdir -p ~/.circleci
               echo -e "token: placeholder\nverbose: false" > ~/.circleci/cli.yml
       - run:
           name: "Check: orb validate"
