@@ -1,0 +1,78 @@
+description: "Markdown testing"
+
+commands:
+  markdown_lint_node:
+    description: 'Markdown lint (nodeJS)'
+    steps:
+      - run:
+          name: "Install: markdown lint (node.js)"
+          command: |
+              sudo npm install -g markdownlint-cli
+      - run:
+          name: "Check: markdown lint (node.js)"
+          command: |
+              #markdownlint --help
+              echo -n "markdownlint version: "
+              markdownlint --version
+              markdownlint ./
+  markdown_lint_ruby:
+    description: "Markdown lint (ruby)"
+    # Markdown Lint https://github.com/markdownlint/markdownlint
+    # https://hub.docker.com/r/circleci/ruby/tags/
+    steps:
+      - run:
+          name: "Install: markdown lint (ruby)"
+          command: |
+              gem install mdl
+      - run:
+          name: "Check: markdown lint (ruby)"
+          command: |
+              #mdl --help
+              echo -n "mdl version: "
+              mdl --version
+              mdl .
+
+executors:
+  node:
+    parameters:
+      version:
+        description: "CircleCI Node docker version tag"
+        type: string
+        default: "10.5.0"
+    docker:
+      - image: circleci/node:<< parameters.version >>
+  ruby:
+    parameters:
+      version:
+        description: "CircleCI Ruby docker version tag"
+        type: string
+        default: "2.5.1"
+    docker:
+      - image: circleci/ruby:<< parameters.version >>
+
+
+jobs:
+  markdownlint-node:
+    parameters:
+      version:
+        description: "Node version"
+        default: "2.5.1"
+        type: string
+    executor:
+      name: node
+      version: << parameters.version >>
+    steps:
+      - checkout
+      - markdown_lint_node
+  markdownlint-ruby:
+    parameters:
+      version:
+        description: "Ruby version"
+        default: "10.5.0"
+        type: string
+    executor:
+      name: ruby
+      version: << parameters.version >>
+    steps:
+      - checkout
+      - markdown_lint_ruby
