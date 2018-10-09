@@ -30,7 +30,6 @@ jobs:
               done
 
 workflows:
-  version: 2.1
   main:
     jobs:
       - lint
