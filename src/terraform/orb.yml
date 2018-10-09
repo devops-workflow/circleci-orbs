@@ -1,4 +1,4 @@
----
+version: 2.1
 description: "Terraform module testing"
 
 commands:

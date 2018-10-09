@@ -1,12 +1,5 @@
 ---
-version: 2
-
-workflows:
-  version: 2
-  main:
-    jobs:
-      - lint
-      - build
+version: 2.1
 
 jobs:
   lint:
@@ -35,3 +28,10 @@ jobs:
               for ORB in src/*; do
                 circleci orb validate --path $ORB/orb.yml
               done
+
+workflows:
+  version: 2.1
+  main:
+    jobs:
+      - lint
+      - build
